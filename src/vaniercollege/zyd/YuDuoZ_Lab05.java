@@ -8,13 +8,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.beans.value.*;
 
 /**
  * @author Yu Duo Zhang (24800549)
  * https://github.com/zyd-074/Vanier_F25_420-SF3-RE_Lab05.git
  */
 public class YuDuoZ_Lab05 extends Application {
-
+    static String orderStyle = "";
+    static String orderQuantity = "";
+    static String orderSize = "";        
+    
     /**
      * @param args the command line arguments
      */
@@ -44,20 +48,40 @@ public class YuDuoZ_Lab05 extends Application {
         ListView<String> bagStyles = new ListView(bagList);
         bagStyles.setPrefSize(200, 100);
         
+        bagStyles.getSelectionModel().selectedItemProperty().addListener(e -> {
+            orderStyle = bagStyles.getSelectionModel().getSelectedItem();
+        });
+        
+        
         // Bag Quantity
         ComboBox bagQuantity = new ComboBox();
         bagQuantity.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         
+        bagQuantity.setOnAction(e -> {
+            if (bagQuantity.getValue() != null) {
+                orderQuantity = bagQuantity.getValue().toString();
+            }
+        });
+        
         // Bag Sizes
         ToggleGroup bagSizes = new ToggleGroup();
         RadioButton small = new RadioButton("Small");
+        small.setUserData("Small");
         small.setToggleGroup(bagSizes);
         RadioButton medium = new RadioButton("Medium");
+        medium.setUserData("Medium");
         medium.setToggleGroup(bagSizes);
         RadioButton large = new RadioButton("Large");
+        large.setUserData("Large");
         large.setToggleGroup(bagSizes);
         VBox sizeControl = new VBox();
         sizeControl.getChildren().addAll(small, medium, large);
+        
+        bagSizes.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> ov, Toggle oldToggle, Toggle newToggle) -> {
+            if (bagSizes.getSelectedToggle() != null) {
+                orderSize = bagSizes.getSelectedToggle().getUserData().toString();
+            }
+        });
         
         // Place Order & Clear
         VBox orderControls = new VBox();
@@ -67,13 +91,34 @@ public class YuDuoZ_Lab05 extends Application {
         Button clear = new Button("Clear Selections");
         orderButtons.getChildren().addAll(order, clear);
         orderButtons.setSpacing(15);
-        Label orderConfirm = new Label("Test");
+        Label orderConfirm = new Label("");
         orderButtons.setAlignment(Pos.CENTER_RIGHT);
         
         orderControls.getChildren().addAll(orderButtons, orderConfirm);
         orderControls.setAlignment(Pos.CENTER_RIGHT);
         orderControls.setSpacing(10);
         orderControls.setPadding(new Insets(10,10,10,10));
+        
+        order.setOnAction(e -> {
+            if (!orderStyle.isEmpty() && !orderQuantity.isEmpty() && !orderSize.isEmpty()) {
+                String orderText = String.format("You ordered %s %s %s Bags.", orderQuantity, orderSize, orderStyle);
+                orderConfirm.setText(orderText);
+            } else {
+                orderConfirm.setText("Please select all informations.");
+            }
+        });
+        
+        clear.setOnAction(e -> {
+            orderSize = null;
+            orderQuantity = null;
+            orderStyle = null;
+            
+            bagSizes.selectToggle(null);
+            bagQuantity.setValue(null);
+            bagStyles.getSelectionModel().select(-1);
+            
+            orderConfirm.setText("");
+        });
         
         // Layout Setup
         bagChoice.getChildren().addAll(style, bagStyles, quantity, bagQuantity, size, sizeControl);
