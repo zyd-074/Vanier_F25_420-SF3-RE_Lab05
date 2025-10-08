@@ -59,15 +59,34 @@ public class YuDuoZ_Lab05 extends Application {
         VBox sizeControl = new VBox();
         sizeControl.getChildren().addAll(small, medium, large);
         
+        // Place Order & Clear
+        VBox orderControls = new VBox();
+        
+        HBox orderButtons = new HBox();
+        Button order = new Button("Place Order");
+        Button clear = new Button("Clear Selections");
+        orderButtons.getChildren().addAll(order, clear);
+        orderButtons.setSpacing(15);
+        Label orderConfirm = new Label("Test");
+        orderButtons.setAlignment(Pos.CENTER_RIGHT);
+        
+        orderControls.getChildren().addAll(orderButtons, orderConfirm);
+        orderControls.setAlignment(Pos.CENTER_RIGHT);
+        orderControls.setSpacing(10);
+        orderControls.setPadding(new Insets(10,10,10,10));
+        
         // Layout Setup
         bagChoice.getChildren().addAll(style, bagStyles, quantity, bagQuantity, size, sizeControl);
         bagChoice.setSpacing(15);
+        bagChoice.setPadding(new Insets(10,10,10,10));
         root.setCenter(bagChoice);
+        root.setBottom(orderControls);
         root.setPadding(new Insets(15,15,15,15));
         
         // Scene Setup
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Bag Order Form");
         stage.show();
     }
 }
