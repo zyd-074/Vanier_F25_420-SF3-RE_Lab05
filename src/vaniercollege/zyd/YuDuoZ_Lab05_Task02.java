@@ -14,6 +14,11 @@ import javafx.stage.Stage;
  * https://github.com/zyd-074/Vanier_F25_420-SF3-RE_Lab05.git
  */
 public class YuDuoZ_Lab05_Task02 extends Application {
+    double subtotalAmount;
+    double taxAmount;
+    double tipAmount;
+    double totalAmount;
+    
     /**
      * @param args the command line arguments
      */
@@ -74,10 +79,30 @@ public class YuDuoZ_Lab05_Task02 extends Application {
         root.setLeft(selectControl);
         category.setOnAction(e -> {
             switch (category.getValue().toString()) {
-                case "Beverage" -> root.setCenter(beverageMenu);
-                case "Appetizer" -> root.setCenter(appetizerMenu);
-                case "Main Course" -> root.setCenter(mainMenu);
-                case "Dessert" -> root.setCenter(dessertMenu);
+                case "Beverage" -> {
+                    appetizerMenu.getSelectionModel().select(-1);
+                    mainMenu.getSelectionModel().select(-1);
+                    dessertMenu.getSelectionModel().select(-1);
+                    root.setCenter(beverageMenu);
+                }
+                case "Appetizer" -> {
+                    beverageMenu.getSelectionModel().select(-1);
+                    mainMenu.getSelectionModel().select(-1);
+                    dessertMenu.getSelectionModel().select(-1);
+                    root.setCenter(appetizerMenu);
+                }
+                case "Main Course" -> {
+                    beverageMenu.getSelectionModel().select(-1);
+                    appetizerMenu.getSelectionModel().select(-1);
+                    dessertMenu.getSelectionModel().select(-1);
+                    root.setCenter(mainMenu);
+                }
+                case "Dessert" -> {
+                    beverageMenu.getSelectionModel().select(-1);
+                    mainMenu.getSelectionModel().select(-1);
+                    appetizerMenu.getSelectionModel().select(-1);
+                    root.setCenter(dessertMenu);
+                }
             }
         });
         
@@ -93,10 +118,10 @@ public class YuDuoZ_Lab05_Task02 extends Application {
         tips.showTickLabelsProperty().set(true);
         tips.showTickMarksProperty().set(true);
         tips.showTickMarksProperty();
-        Label subtotal = new Label();
-        Label tax = new Label();
-        Label tip = new Label();
-        Label total = new Label();
+        Label subtotal = new Label(String.format(String.format("Subtotal: %.2f", subtotalAmount)));
+        Label tax = new Label(String.format("Tax: %.2f", taxAmount));
+        Label tip = new Label(String.format("Tip: %.2f", tipAmount));
+        Label total = new Label(String.format("Total: %.2f", totalAmount));
         billControl.getChildren().addAll(bill, buttons, tipsMessage, tips, subtotal, tax, tip, total);
         root.setRight(billControl);
         
