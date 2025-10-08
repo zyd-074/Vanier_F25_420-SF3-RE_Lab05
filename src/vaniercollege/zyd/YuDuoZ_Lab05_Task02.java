@@ -1,6 +1,9 @@
 package vaniercollege.zyd;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 /**
@@ -14,10 +17,21 @@ public class YuDuoZ_Lab05_Task02 extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
     
     @Override
     public void start(Stage stage) {
+        BorderPane root = new BorderPane();
         
+        HBox selectControl = new HBox();
+        Label categorySelect = new Label("Category: ");
+        ComboBox category = new ComboBox();
+        category.getItems().addAll("Beverage", "Appetizer", "Main Course", "Dessert");
+        selectControl.getChildren().addAll(categorySelect, category);
+        
+        root.setLeft(selectControl);
+        
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
