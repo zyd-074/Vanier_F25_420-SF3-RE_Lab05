@@ -63,10 +63,14 @@ public class YuDuoZ_Lab05_Task02 extends Application {
         ObservableList<String> mainCourse = FXCollections.observableArrayList(mainList);
         ObservableList<String> dessert = FXCollections.observableArrayList(dessertList);
         ListView<String> beverageMenu = new ListView<>(beverage);
+        beverageMenu.setPrefSize(200, 100);
         ListView<String> appetizerMenu = new ListView<>(appetizer);
+        appetizerMenu.setPrefSize(200, 100);
         ListView<String> mainMenu = new ListView<>(mainCourse);
+        mainMenu.setPrefSize(200, 100);
         ListView<String> dessertMenu = new ListView<>(dessert);
-        
+        dessertMenu.setPrefSize(200, 100);
+
         root.setLeft(selectControl);
         category.setOnAction(e -> {
             switch (category.getValue().toString()) {
@@ -77,7 +81,26 @@ public class YuDuoZ_Lab05_Task02 extends Application {
             }
         });
         
-        Scene scene = new Scene(root, 500, 200);
+        VBox billControl = new VBox();
+        ListView<String> bill = new ListView<>();
+        bill.setPrefSize(150, 100);
+        Button addToMenu = new Button("Add to bill");
+        Button clear = new Button("Clear bill");
+        HBox buttons = new HBox();
+        buttons.getChildren().addAll(addToMenu, clear);
+        Label tipsMessage = new Label("Please leave a tip: ");
+        Slider tips = new Slider(0,20,15);
+        tips.showTickLabelsProperty().set(true);
+        tips.showTickMarksProperty().set(true);
+        tips.showTickMarksProperty();
+        Label subtotal = new Label();
+        Label tax = new Label();
+        Label tip = new Label();
+        Label total = new Label();
+        billControl.getChildren().addAll(bill, buttons, tipsMessage, tips, subtotal, tax, tip, total);
+        root.setRight(billControl);
+        
+        Scene scene = new Scene(root, 600, 300);
         stage.setScene(scene);
         stage.show();
     }
