@@ -14,7 +14,7 @@ import javafx.beans.value.*;
  * @author Yu Duo Zhang (24800549)
  * https://github.com/zyd-074/Vanier_F25_420-SF3-RE_Lab05.git
  */
-public class YuDuoZ_Lab05 extends Application {
+public class YuDuoZ_Lab05_Task01 extends Application {
     static String orderStyle = "";
     static String orderQuantity = "";
     static String orderSize = "";        
