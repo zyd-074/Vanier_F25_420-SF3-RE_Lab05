@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -189,9 +190,21 @@ public class YuDuoZ_Lab05_Task02 extends Application {
             tax.setText(String.format("Tax: %.2f", 0.00));
             tip.setText(String.format("Tip: %.2f (Currently at %.2f percents)", 0.00, tips.getValue()));
             total.setText(String.format("Total: %.2f", 0.00));
+            beverageMenu.getSelectionModel().select(-1);
+            mainMenu.getSelectionModel().select(-1);
+            appetizerMenu.getSelectionModel().select(-1);
+            dessertMenu.getSelectionModel().select(-1);
+            root.setCenter(beverageMenu);
+            category.getSelectionModel().select(0);
         });
         
-        Scene scene = new Scene(root, 600, 300);
+        root.setPadding(new Insets(15,15,15,15));
+        selectControl.setSpacing(10);
+        selectControl.setPadding(new Insets(10,10,10,10));
+        billControl.setSpacing(10);
+        billControl.setPadding(new Insets(10,10,10,10));
+        
+        Scene scene = new Scene(root, 700, 300);
         stage.setScene(scene);
         stage.setTitle("Table Bill Calculator");
         stage.show();
