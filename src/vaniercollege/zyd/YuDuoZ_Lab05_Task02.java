@@ -180,6 +180,17 @@ public class YuDuoZ_Lab05_Task02 extends Application {
             }
         });
         
+        // Clear Button Handler
+        clear.setOnAction(e -> {
+            subtotalAmount = 0;
+            tips.setValue(15);
+            bill.getItems().clear();
+            subtotal.setText(String.format(String.format("Subtotal: %.2f", subtotalAmount)));
+            tax.setText(String.format("Tax: %.2f", 0.00));
+            tip.setText(String.format("Tip: %.2f (Currently at %.2f percents)", 0.00, tips.getValue()));
+            total.setText(String.format("Total: %.2f", 0.00));
+        });
+        
         Scene scene = new Scene(root, 600, 300);
         stage.setScene(scene);
         stage.setTitle("Table Bill Calculator");
